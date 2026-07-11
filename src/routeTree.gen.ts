@@ -18,13 +18,23 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdmissionsRouteImport } from './routes/admissions'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
 import { Route as AcademicsSecondaryRouteImport } from './routes/academics.secondary'
 import { Route as AcademicsPrimaryRouteImport } from './routes/academics.primary'
 import { Route as AcademicsNurseryRouteImport } from './routes/academics.nursery'
+import { Route as AuthenticatedDashboardTeacherRouteImport } from './routes/_authenticated/dashboard.teacher'
+import { Route as AuthenticatedDashboardSuperAdminRouteImport } from './routes/_authenticated/dashboard.super-admin'
+import { Route as AuthenticatedDashboardStudentRouteImport } from './routes/_authenticated/dashboard.student'
+import { Route as AuthenticatedDashboardSchoolAdminRouteImport } from './routes/_authenticated/dashboard.school-admin'
+import { Route as AuthenticatedDashboardPendingRouteImport } from './routes/_authenticated/dashboard.pending'
+import { Route as AuthenticatedDashboardParentRouteImport } from './routes/_authenticated/dashboard.parent'
+import { Route as AuthenticatedDashboardLibrarianRouteImport } from './routes/_authenticated/dashboard.librarian'
+import { Route as AuthenticatedDashboardAccountantRouteImport } from './routes/_authenticated/dashboard.accountant'
 
 const StudentPortalRoute = StudentPortalRouteImport.update({
   id: '/student-portal',
@@ -71,6 +81,11 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdmissionsRoute = AdmissionsRouteImport.update({
   id: '/admissions',
   path: '/admissions',
@@ -79,6 +94,10 @@ const AdmissionsRoute = AdmissionsRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -106,11 +125,60 @@ const AcademicsNurseryRoute = AcademicsNurseryRouteImport.update({
   path: '/academics/nursery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardTeacherRoute =
+  AuthenticatedDashboardTeacherRouteImport.update({
+    id: '/dashboard/teacher',
+    path: '/dashboard/teacher',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardSuperAdminRoute =
+  AuthenticatedDashboardSuperAdminRouteImport.update({
+    id: '/dashboard/super-admin',
+    path: '/dashboard/super-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardStudentRoute =
+  AuthenticatedDashboardStudentRouteImport.update({
+    id: '/dashboard/student',
+    path: '/dashboard/student',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardSchoolAdminRoute =
+  AuthenticatedDashboardSchoolAdminRouteImport.update({
+    id: '/dashboard/school-admin',
+    path: '/dashboard/school-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardPendingRoute =
+  AuthenticatedDashboardPendingRouteImport.update({
+    id: '/dashboard/pending',
+    path: '/dashboard/pending',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardParentRoute =
+  AuthenticatedDashboardParentRouteImport.update({
+    id: '/dashboard/parent',
+    path: '/dashboard/parent',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardLibrarianRoute =
+  AuthenticatedDashboardLibrarianRouteImport.update({
+    id: '/dashboard/librarian',
+    path: '/dashboard/librarian',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardAccountantRoute =
+  AuthenticatedDashboardAccountantRouteImport.update({
+    id: '/dashboard/accountant',
+    path: '/dashboard/accountant',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -124,11 +192,20 @@ export interface FileRoutesByFullPath {
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
   '/academics/': typeof AcademicsIndexRoute
+  '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
+  '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
+  '/dashboard/parent': typeof AuthenticatedDashboardParentRoute
+  '/dashboard/pending': typeof AuthenticatedDashboardPendingRoute
+  '/dashboard/school-admin': typeof AuthenticatedDashboardSchoolAdminRoute
+  '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
+  '/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -142,12 +219,22 @@ export interface FileRoutesByTo {
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
   '/academics': typeof AcademicsIndexRoute
+  '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
+  '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
+  '/dashboard/parent': typeof AuthenticatedDashboardParentRoute
+  '/dashboard/pending': typeof AuthenticatedDashboardPendingRoute
+  '/dashboard/school-admin': typeof AuthenticatedDashboardSchoolAdminRoute
+  '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
+  '/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -161,6 +248,14 @@ export interface FileRoutesById {
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
   '/academics/': typeof AcademicsIndexRoute
+  '/_authenticated/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
+  '/_authenticated/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
+  '/_authenticated/dashboard/parent': typeof AuthenticatedDashboardParentRoute
+  '/_authenticated/dashboard/pending': typeof AuthenticatedDashboardPendingRoute
+  '/_authenticated/dashboard/school-admin': typeof AuthenticatedDashboardSchoolAdminRoute
+  '/_authenticated/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/_authenticated/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
+  '/_authenticated/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,6 +263,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admissions'
+    | '/auth'
     | '/careers'
     | '/contact'
     | '/faq'
@@ -181,11 +277,20 @@ export interface FileRouteTypes {
     | '/academics/primary'
     | '/academics/secondary'
     | '/academics/'
+    | '/dashboard/accountant'
+    | '/dashboard/librarian'
+    | '/dashboard/parent'
+    | '/dashboard/pending'
+    | '/dashboard/school-admin'
+    | '/dashboard/student'
+    | '/dashboard/super-admin'
+    | '/dashboard/teacher'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/admissions'
+    | '/auth'
     | '/careers'
     | '/contact'
     | '/faq'
@@ -199,11 +304,21 @@ export interface FileRouteTypes {
     | '/academics/primary'
     | '/academics/secondary'
     | '/academics'
+    | '/dashboard/accountant'
+    | '/dashboard/librarian'
+    | '/dashboard/parent'
+    | '/dashboard/pending'
+    | '/dashboard/school-admin'
+    | '/dashboard/student'
+    | '/dashboard/super-admin'
+    | '/dashboard/teacher'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/admissions'
+    | '/auth'
     | '/careers'
     | '/contact'
     | '/faq'
@@ -217,12 +332,22 @@ export interface FileRouteTypes {
     | '/academics/primary'
     | '/academics/secondary'
     | '/academics/'
+    | '/_authenticated/dashboard/accountant'
+    | '/_authenticated/dashboard/librarian'
+    | '/_authenticated/dashboard/parent'
+    | '/_authenticated/dashboard/pending'
+    | '/_authenticated/dashboard/school-admin'
+    | '/_authenticated/dashboard/student'
+    | '/_authenticated/dashboard/super-admin'
+    | '/_authenticated/dashboard/teacher'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdmissionsRoute: typeof AdmissionsRoute
+  AuthRoute: typeof AuthRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
@@ -303,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admissions': {
       id: '/admissions'
       path: '/admissions'
@@ -315,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -352,13 +491,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcademicsNurseryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard/teacher': {
+      id: '/_authenticated/dashboard/teacher'
+      path: '/dashboard/teacher'
+      fullPath: '/dashboard/teacher'
+      preLoaderRoute: typeof AuthenticatedDashboardTeacherRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/super-admin': {
+      id: '/_authenticated/dashboard/super-admin'
+      path: '/dashboard/super-admin'
+      fullPath: '/dashboard/super-admin'
+      preLoaderRoute: typeof AuthenticatedDashboardSuperAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/student': {
+      id: '/_authenticated/dashboard/student'
+      path: '/dashboard/student'
+      fullPath: '/dashboard/student'
+      preLoaderRoute: typeof AuthenticatedDashboardStudentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/school-admin': {
+      id: '/_authenticated/dashboard/school-admin'
+      path: '/dashboard/school-admin'
+      fullPath: '/dashboard/school-admin'
+      preLoaderRoute: typeof AuthenticatedDashboardSchoolAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/pending': {
+      id: '/_authenticated/dashboard/pending'
+      path: '/dashboard/pending'
+      fullPath: '/dashboard/pending'
+      preLoaderRoute: typeof AuthenticatedDashboardPendingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/parent': {
+      id: '/_authenticated/dashboard/parent'
+      path: '/dashboard/parent'
+      fullPath: '/dashboard/parent'
+      preLoaderRoute: typeof AuthenticatedDashboardParentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/librarian': {
+      id: '/_authenticated/dashboard/librarian'
+      path: '/dashboard/librarian'
+      fullPath: '/dashboard/librarian'
+      preLoaderRoute: typeof AuthenticatedDashboardLibrarianRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/accountant': {
+      id: '/_authenticated/dashboard/accountant'
+      path: '/dashboard/accountant'
+      fullPath: '/dashboard/accountant'
+      preLoaderRoute: typeof AuthenticatedDashboardAccountantRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardAccountantRoute: typeof AuthenticatedDashboardAccountantRoute
+  AuthenticatedDashboardLibrarianRoute: typeof AuthenticatedDashboardLibrarianRoute
+  AuthenticatedDashboardParentRoute: typeof AuthenticatedDashboardParentRoute
+  AuthenticatedDashboardPendingRoute: typeof AuthenticatedDashboardPendingRoute
+  AuthenticatedDashboardSchoolAdminRoute: typeof AuthenticatedDashboardSchoolAdminRoute
+  AuthenticatedDashboardStudentRoute: typeof AuthenticatedDashboardStudentRoute
+  AuthenticatedDashboardSuperAdminRoute: typeof AuthenticatedDashboardSuperAdminRoute
+  AuthenticatedDashboardTeacherRoute: typeof AuthenticatedDashboardTeacherRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardAccountantRoute: AuthenticatedDashboardAccountantRoute,
+  AuthenticatedDashboardLibrarianRoute: AuthenticatedDashboardLibrarianRoute,
+  AuthenticatedDashboardParentRoute: AuthenticatedDashboardParentRoute,
+  AuthenticatedDashboardPendingRoute: AuthenticatedDashboardPendingRoute,
+  AuthenticatedDashboardSchoolAdminRoute:
+    AuthenticatedDashboardSchoolAdminRoute,
+  AuthenticatedDashboardStudentRoute: AuthenticatedDashboardStudentRoute,
+  AuthenticatedDashboardSuperAdminRoute: AuthenticatedDashboardSuperAdminRoute,
+  AuthenticatedDashboardTeacherRoute: AuthenticatedDashboardTeacherRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AdmissionsRoute: AdmissionsRoute,
+  AuthRoute: AuthRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
