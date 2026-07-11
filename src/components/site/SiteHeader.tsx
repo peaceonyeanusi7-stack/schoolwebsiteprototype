@@ -60,10 +60,10 @@ export function SiteHeader() {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            to="/contact"
+            to="/auth"
             className="hidden md:inline-flex text-sm font-semibold text-royal px-4 py-2 hover:bg-royal/5 rounded-full transition-colors"
           >
-            Book Tour
+            Sign In
           </Link>
           <Link
             to="/admissions"
