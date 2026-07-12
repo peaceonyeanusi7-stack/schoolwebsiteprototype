@@ -30,15 +30,17 @@ export const listSchools = createServerFn({ method: "GET" })
       .select("*")
       .order("created_at", { ascending: false });
     if (error) throw new Error(error.message);
-    // fetch admin count per school
-    const { data: adminRows } = await supabaseAdmin
-      .from("user_roles")
-      .select("user_id, role, profiles!inner(school_id)")
-      .eq("role", "school_admin");
+    // fetch admin count per school (two-step to avoid relying on postgrest FK inference)
+    const { data: adminRoleRows } = await supabaseAdmin
+      .from("user_roles").select("user_id").eq("role", "school_admin");
+    const adminIds = (adminRoleRows ?? []).map((r: any) => r.user_id);
     const counts: Record<string, number> = {};
-    for (const r of (adminRows ?? []) as any[]) {
-      const sid = r.profiles?.school_id;
-      if (sid) counts[sid] = (counts[sid] ?? 0) + 1;
+    if (adminIds.length) {
+      const { data: adminProfiles } = await supabaseAdmin
+        .from("profiles").select("school_id").in("id", adminIds);
+      for (const p of (adminProfiles ?? []) as any[]) {
+        if (p.school_id) counts[p.school_id] = (counts[p.school_id] ?? 0) + 1;
+      }
     }
     return { schools: (schools ?? []).map((s) => ({ ...s, admin_count: counts[s.id] ?? 0 })) };
   });
