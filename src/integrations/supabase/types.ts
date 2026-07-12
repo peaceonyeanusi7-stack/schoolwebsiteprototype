@@ -19,16 +19,60 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          school_id: string | null
         }
         Insert: {
           created_at?: string
           full_name?: string | null
           id: string
+          school_id?: string | null
         }
         Update: {
           created_at?: string
           full_name?: string | null
           id?: string
+          school_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schools: {
+        Row: {
+          address: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          subscription_status: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          subscription_status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          subscription_status?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -58,6 +102,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_user_school: { Args: { _user_id: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
