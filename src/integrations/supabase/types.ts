@@ -110,6 +110,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      same_school_as_caller: {
+        Args: { _target_user: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:
