@@ -14,6 +14,135 @@ export type Database = {
   }
   public: {
     Tables: {
+      fee_items: {
+        Row: {
+          amount_kobo: number
+          category: Database["public"]["Enums"]["fee_category"]
+          class_level: string | null
+          created_at: string
+          currency: string
+          id: string
+          is_active: boolean
+          name: string
+          school_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount_kobo: number
+          category: Database["public"]["Enums"]["fee_category"]
+          class_level?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          school_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount_kobo?: number
+          category?: Database["public"]["Enums"]["fee_category"]
+          class_level?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          school_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fee_items_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount_kobo: number
+          created_at: string
+          currency: string
+          fee_item_id: string | null
+          id: string
+          metadata: Json
+          payer_email: string
+          payer_name: string | null
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          paystack_access_code: string | null
+          paystack_reference: string
+          school_id: string | null
+          status: Database["public"]["Enums"]["payment_status"]
+          subscription_plan_id: string | null
+          updated_at: string
+          user_id: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          amount_kobo: number
+          created_at?: string
+          currency?: string
+          fee_item_id?: string | null
+          id?: string
+          metadata?: Json
+          payer_email: string
+          payer_name?: string | null
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          paystack_access_code?: string | null
+          paystack_reference: string
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          subscription_plan_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          amount_kobo?: number
+          created_at?: string
+          currency?: string
+          fee_item_id?: string | null
+          id?: string
+          metadata?: Json
+          payer_email?: string
+          payer_name?: string | null
+          payment_type?: Database["public"]["Enums"]["payment_type"]
+          paystack_access_code?: string | null
+          paystack_reference?: string
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          subscription_plan_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_fee_item_id_fkey"
+            columns: ["fee_item_id"]
+            isOneToOne: false
+            referencedRelation: "fee_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_subscription_plan_id_fkey"
+            columns: ["subscription_plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -50,7 +179,9 @@ export type Database = {
           email: string | null
           id: string
           name: string
+          paystack_customer_code: string | null
           phone: string | null
+          subscription_ends_at: string | null
           subscription_status: string
           updated_at: string
         }
@@ -60,7 +191,9 @@ export type Database = {
           email?: string | null
           id?: string
           name: string
+          paystack_customer_code?: string | null
           phone?: string | null
+          subscription_ends_at?: string | null
           subscription_status?: string
           updated_at?: string
         }
@@ -70,8 +203,46 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string
+          paystack_customer_code?: string | null
           phone?: string | null
+          subscription_ends_at?: string | null
           subscription_status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscription_plans: {
+        Row: {
+          amount_kobo: number
+          created_at: string
+          currency: string
+          description: string | null
+          duration_days: number
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          amount_kobo: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          duration_days?: number
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          amount_kobo?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          duration_days?: number
+          id?: string
+          is_active?: boolean
+          name?: string
           updated_at?: string
         }
         Relationships: []
@@ -124,6 +295,9 @@ export type Database = {
         | "student"
         | "accountant"
         | "librarian"
+      fee_category: "admission" | "school_fee"
+      payment_status: "pending" | "success" | "failed" | "abandoned"
+      payment_type: "admission" | "school_fee" | "subscription"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -260,6 +434,9 @@ export const Constants = {
         "accountant",
         "librarian",
       ],
+      fee_category: ["admission", "school_fee"],
+      payment_status: ["pending", "success", "failed", "abandoned"],
+      payment_type: ["admission", "school_fee", "subscription"],
     },
   },
 } as const
