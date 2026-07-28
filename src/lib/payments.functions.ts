@@ -146,11 +146,12 @@ export const initializePayment = createServerFn({ method: "POST" })
     let amountKobo = data.amountKobo ?? 0;
     let referencePrefix = "OASIS";
     let paymentTypeLabel = "";
-    let metadata: Record<string, unknown> = {
+    const metadata: Record<string, Json> = {
       school_id: profile.school_id,
       user_id: context.userId,
       payment_type: data.paymentType,
     };
+
     let feeItemId: string | null = null;
     let subscriptionPlanId: string | null = null;
 
