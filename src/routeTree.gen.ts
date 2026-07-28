@@ -37,6 +37,7 @@ import { Route as AuthenticatedDashboardParentRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardLibrarianRouteImport } from './routes/_authenticated/dashboard.librarian'
 import { Route as AuthenticatedDashboardAccountantRouteImport } from './routes/_authenticated/dashboard.accountant'
 import { Route as ApiPublicWebhooksPaystackRouteImport } from './routes/api/public/webhooks/paystack'
+import { Route as AuthenticatedDashboardPaymentCallbackRouteImport } from './routes/_authenticated/dashboard.payment.callback'
 
 const StudentPortalRoute = StudentPortalRouteImport.update({
   id: '/student-portal',
@@ -186,6 +187,12 @@ const ApiPublicWebhooksPaystackRoute =
     path: '/api/public/webhooks/paystack',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedDashboardPaymentCallbackRoute =
+  AuthenticatedDashboardPaymentCallbackRouteImport.update({
+    id: '/dashboard/payment/callback',
+    path: '/dashboard/payment/callback',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -214,6 +221,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
   '/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
+  '/dashboard/payment/callback': typeof AuthenticatedDashboardPaymentCallbackRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRoutesByTo {
@@ -243,6 +251,7 @@ export interface FileRoutesByTo {
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
   '/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
+  '/dashboard/payment/callback': typeof AuthenticatedDashboardPaymentCallbackRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRoutesById {
@@ -274,6 +283,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/_authenticated/dashboard/super-admin': typeof AuthenticatedDashboardSuperAdminRoute
   '/_authenticated/dashboard/teacher': typeof AuthenticatedDashboardTeacherRoute
+  '/_authenticated/dashboard/payment/callback': typeof AuthenticatedDashboardPaymentCallbackRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRouteTypes {
@@ -305,6 +315,7 @@ export interface FileRouteTypes {
     | '/dashboard/student'
     | '/dashboard/super-admin'
     | '/dashboard/teacher'
+    | '/dashboard/payment/callback'
     | '/api/public/webhooks/paystack'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -334,6 +345,7 @@ export interface FileRouteTypes {
     | '/dashboard/student'
     | '/dashboard/super-admin'
     | '/dashboard/teacher'
+    | '/dashboard/payment/callback'
     | '/api/public/webhooks/paystack'
   id:
     | '__root__'
@@ -364,6 +376,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/student'
     | '/_authenticated/dashboard/super-admin'
     | '/_authenticated/dashboard/teacher'
+    | '/_authenticated/dashboard/payment/callback'
     | '/api/public/webhooks/paystack'
   fileRoutesById: FileRoutesById
 }
@@ -588,6 +601,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicWebhooksPaystackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard/payment/callback': {
+      id: '/_authenticated/dashboard/payment/callback'
+      path: '/dashboard/payment/callback'
+      fullPath: '/dashboard/payment/callback'
+      preLoaderRoute: typeof AuthenticatedDashboardPaymentCallbackRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -600,6 +620,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardStudentRoute: typeof AuthenticatedDashboardStudentRoute
   AuthenticatedDashboardSuperAdminRoute: typeof AuthenticatedDashboardSuperAdminRoute
   AuthenticatedDashboardTeacherRoute: typeof AuthenticatedDashboardTeacherRoute
+  AuthenticatedDashboardPaymentCallbackRoute: typeof AuthenticatedDashboardPaymentCallbackRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -612,6 +633,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardStudentRoute: AuthenticatedDashboardStudentRoute,
   AuthenticatedDashboardSuperAdminRoute: AuthenticatedDashboardSuperAdminRoute,
   AuthenticatedDashboardTeacherRoute: AuthenticatedDashboardTeacherRoute,
+  AuthenticatedDashboardPaymentCallbackRoute:
+    AuthenticatedDashboardPaymentCallbackRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

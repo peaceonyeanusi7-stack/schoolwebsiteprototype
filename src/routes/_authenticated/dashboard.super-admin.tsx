@@ -2,9 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { DashboardShell, StatCard } from "@/components/site/DashboardShell";
+import { DashboardShell, StatCard, QuickLink } from "@/components/site/DashboardShell";
 import { listSchools, createSchoolWithAdmin } from "@/lib/admin.functions";
-import { Plus, School, Mail } from "lucide-react";
+import { listSubscriptionPlans, createSubscriptionPlan, listAllPayments } from "@/lib/payments.functions";
+import { Plus, School, Mail, CreditCard, Layers } from "lucide-react";
+import { formatNaira } from "@/lib/payments.functions";
+
 
 export const Route = createFileRoute("/_authenticated/dashboard/super-admin")({
   head: () => ({ meta: [{ title: "Super Admin — Oasis Academy" }, { name: "robots", content: "noindex" }] }),
