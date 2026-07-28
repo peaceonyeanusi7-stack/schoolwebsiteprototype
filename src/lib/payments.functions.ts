@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Json } from "@/integrations/supabase/types";
 import {
   formatNaira,
   generatePaystackReference,
@@ -10,6 +11,7 @@ import {
   type PaymentType,
   type FeeCategory,
 } from "./payments.server";
+
 
 const DEFAULT_CURRENCY = "NGN";
 
