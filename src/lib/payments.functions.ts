@@ -12,6 +12,8 @@ import {
   type FeeCategory,
 } from "./payments.server";
 
+export { formatNaira };
+
 
 const DEFAULT_CURRENCY = "NGN";
 
