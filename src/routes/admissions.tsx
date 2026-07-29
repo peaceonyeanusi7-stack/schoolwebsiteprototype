@@ -114,21 +114,164 @@ function StepCard({ num, icon: Icon, title, desc }: { num: number; icon: React.E
   );
 }
 
-function Field({ label, type = "text" }: { label: string; type?: string }) {
+const LEVELS = ["Nursery", "Primary", "Secondary", "Boarding"] as const;
+
+function EnquirySection() {
+  const navigate = useNavigate();
+  const submit = useServerFn(submitEnquiry);
+  const [form, setForm] = useState({
+    parentName: "",
+    parentPhone: "",
+    parentEmail: "",
+    childName: "",
+    level: "Nursery" as (typeof LEVELS)[number],
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "saving" | "done">("idle");
+  const [error, setError] = useState<string | null>(null);
+
+  function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
+    setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (form.parentName.trim().length < 2) return setError("Please enter your full name.");
+    if (!/^\S+@\S+\.\S+$/.test(form.parentEmail.trim())) return setError("Please enter a valid email address.");
+    if (form.parentPhone.trim().length < 7) return setError("Please enter a valid phone number.");
+    if (form.childName.trim().length < 2) return setError("Please enter your child's full name.");
+
+    setStatus("saving");
+    try {
+      const res = await submit({
+        data: {
+          parentName: form.parentName.trim(),
+          parentEmail: form.parentEmail.trim(),
+          parentPhone: form.parentPhone.trim(),
+          childName: form.childName.trim(),
+          level: form.level,
+          message: form.message.trim() || null,
+        },
+      });
+      setStatus("done");
+      setTimeout(() => {
+        navigate({ to: "/apply", search: { enquiry: res.enquiryId } });
+      }, 900);
+    } catch (err) {
+      setStatus("idle");
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
+  }
+
+  return (
+    <section id="apply" className="py-24">
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="rounded-3xl bg-card border border-border p-8 md:p-12 shadow-sm">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase text-gold mb-3">Step 1 — Enquiry</p>
+          <h2 className="font-display text-3xl text-royal mb-8">Admissions enquiry form</h2>
+
+          {status === "done" ? (
+            <div className="rounded-2xl bg-emerald/10 border border-emerald/30 p-6 text-center">
+              <CheckCircle2 className="size-10 text-emerald mx-auto mb-3" />
+              <h3 className="font-display text-xl text-royal mb-1">Enquiry received</h3>
+              <p className="text-sm text-muted-foreground">
+                Taking you to the admission application form…
+              </p>
+            </div>
+          ) : (
+            <form className="grid gap-5" onSubmit={onSubmit} noValidate>
+              <div className="grid md:grid-cols-2 gap-5">
+                <Field label="Parent Full Name" value={form.parentName} onChange={(v) => set("parentName", v)} required />
+                <Field label="Phone Number" type="tel" value={form.parentPhone} onChange={(v) => set("parentPhone", v)} required />
+              </div>
+              <Field label="Email Address" type="email" value={form.parentEmail} onChange={(v) => set("parentEmail", v)} required />
+              <div className="grid md:grid-cols-2 gap-5">
+                <Field label="Child's Full Name" value={form.childName} onChange={(v) => set("childName", v)} required />
+                <SelectField
+                  label="Applying To"
+                  options={[...LEVELS]}
+                  value={form.level}
+                  onChange={(v) => set("level", v as (typeof LEVELS)[number])}
+                />
+              </div>
+              <label className="grid gap-2">
+                <span className="text-sm font-semibold">Message</span>
+                <textarea
+                  rows={4}
+                  maxLength={1000}
+                  value={form.message}
+                  onChange={(e) => set("message", e.target.value)}
+                  className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30"
+                />
+              </label>
+              {error && <p className="text-sm text-red-600">{error}</p>}
+              <button
+                type="submit"
+                disabled={status === "saving"}
+                className="bg-royal text-white rounded-full py-4 font-semibold hover:brightness-110 transition disabled:opacity-60 inline-flex items-center justify-center gap-2"
+              >
+                {status === "saving" && <Loader2 className="size-4 animate-spin" />}
+                {status === "saving" ? "Submitting…" : "Submit Enquiry"}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Field({
+  label,
+  type = "text",
+  value,
+  onChange,
+  required,
+}: {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+}) {
   return (
     <label className="grid gap-2">
       <span className="text-sm font-semibold">{label}</span>
-      <input type={type} className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30" />
+      <input
+        type={type}
+        value={value}
+        required={required}
+        onChange={(e) => onChange(e.target.value)}
+        className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30"
+      />
     </label>
   );
 }
 
-function SelectField({ label, options }: { label: string; options: string[] }) {
+function SelectField({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
   return (
     <label className="grid gap-2">
       <span className="text-sm font-semibold">{label}</span>
-      <select className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30">
-        {options.map((o) => <option key={o}>{o}</option>)}
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30"
+      >
+        {options.map((o) => (
+          <option key={o}>{o}</option>
+        ))}
       </select>
     </label>
   );
