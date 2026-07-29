@@ -13,6 +13,7 @@ import { Route as StudentPortalRouteImport } from './routes/student-portal'
 import { Route as StudentLifeRouteImport } from './routes/student-life'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SetPasswordRouteImport } from './routes/set-password'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ParentPortalRouteImport } from './routes/parent-portal'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -20,11 +21,13 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AdmissionsRouteImport } from './routes/admissions'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
+import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as AcademicsSecondaryRouteImport } from './routes/academics.secondary'
 import { Route as AcademicsPrimaryRouteImport } from './routes/academics.primary'
 import { Route as AcademicsNurseryRouteImport } from './routes/academics.nursery'
@@ -57,6 +60,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SetPasswordRoute = SetPasswordRouteImport.update({
   id: '/set-password',
   path: '/set-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentPortalRoute = ParentPortalRouteImport.update({
@@ -94,6 +102,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdmissionsRoute = AdmissionsRouteImport.update({
   id: '/admissions',
   path: '/admissions',
@@ -116,6 +129,11 @@ const IndexRoute = IndexRouteImport.update({
 const AcademicsIndexRoute = AcademicsIndexRouteImport.update({
   id: '/academics/',
   path: '/academics/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentCallbackRoute = PaymentCallbackRouteImport.update({
+  id: '/payment/callback',
+  path: '/payment/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcademicsSecondaryRoute = AcademicsSecondaryRouteImport.update({
@@ -198,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -205,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -212,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics/': typeof AcademicsIndexRoute
   '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -228,6 +249,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -235,6 +257,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -242,6 +265,7 @@ export interface FileRoutesByTo {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics': typeof AcademicsIndexRoute
   '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -260,6 +284,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -267,6 +292,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -274,6 +300,7 @@ export interface FileRoutesById {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics/': typeof AcademicsIndexRoute
   '/_authenticated/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/_authenticated/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -292,6 +319,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -299,6 +327,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -306,6 +335,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics/'
     | '/dashboard/accountant'
     | '/dashboard/librarian'
@@ -322,6 +352,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -329,6 +360,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -336,6 +368,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics'
     | '/dashboard/accountant'
     | '/dashboard/librarian'
@@ -353,6 +386,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -360,6 +394,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -367,6 +402,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics/'
     | '/_authenticated/dashboard/accountant'
     | '/_authenticated/dashboard/librarian'
@@ -385,6 +421,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdmissionsRoute: typeof AdmissionsRoute
+  ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
@@ -392,6 +429,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   NewsRoute: typeof NewsRoute
   ParentPortalRoute: typeof ParentPortalRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SetPasswordRoute: typeof SetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudentLifeRoute: typeof StudentLifeRoute
@@ -399,6 +437,7 @@ export interface RootRouteChildren {
   AcademicsNurseryRoute: typeof AcademicsNurseryRoute
   AcademicsPrimaryRoute: typeof AcademicsPrimaryRoute
   AcademicsSecondaryRoute: typeof AcademicsSecondaryRoute
+  PaymentCallbackRoute: typeof PaymentCallbackRoute
   AcademicsIndexRoute: typeof AcademicsIndexRoute
   ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
 }
@@ -431,6 +470,13 @@ declare module '@tanstack/react-router' {
       path: '/set-password'
       fullPath: '/set-password'
       preLoaderRoute: typeof SetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parent-portal': {
@@ -482,6 +528,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admissions': {
       id: '/admissions'
       path: '/admissions'
@@ -515,6 +568,13 @@ declare module '@tanstack/react-router' {
       path: '/academics'
       fullPath: '/academics/'
       preLoaderRoute: typeof AcademicsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment/callback': {
+      id: '/payment/callback'
+      path: '/payment/callback'
+      fullPath: '/payment/callback'
+      preLoaderRoute: typeof PaymentCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academics/secondary': {
@@ -645,6 +705,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AdmissionsRoute: AdmissionsRoute,
+  ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
@@ -652,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   NewsRoute: NewsRoute,
   ParentPortalRoute: ParentPortalRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SetPasswordRoute: SetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudentLifeRoute: StudentLifeRoute,
@@ -659,6 +721,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcademicsNurseryRoute: AcademicsNurseryRoute,
   AcademicsPrimaryRoute: AcademicsPrimaryRoute,
   AcademicsSecondaryRoute: AcademicsSecondaryRoute,
+  PaymentCallbackRoute: PaymentCallbackRoute,
   AcademicsIndexRoute: AcademicsIndexRoute,
   ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,
 }
