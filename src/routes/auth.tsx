@@ -34,6 +34,20 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  async function onForgotPassword() {
+    setError(null);
+    setNotice(null);
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      return setError("Enter your email address above, then click \"Forgot password?\".");
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) return setError(error.message);
+    setNotice("Password reset link sent. Check your inbox.");
+  }
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -86,12 +100,20 @@ function AuthPage() {
                 />
               </label>
               {error && <p className="text-sm text-red-600">{error}</p>}
+              {notice && <p className="text-sm text-emerald font-semibold">{notice}</p>}
               <button
                 type="submit"
                 disabled={loading}
                 className="bg-royal text-white rounded-full py-3 font-semibold disabled:opacity-60"
               >
                 {loading ? "Signing in…" : "Sign In"}
+              </button>
+              <button
+                type="button"
+                onClick={onForgotPassword}
+                className="text-xs text-royal font-semibold underline justify-self-center"
+              >
+                Forgot password?
               </button>
               <p className="text-xs text-center text-muted-foreground mt-2">
                 Need access? Contact the school office.

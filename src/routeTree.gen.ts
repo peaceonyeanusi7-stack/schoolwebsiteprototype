@@ -13,6 +13,7 @@ import { Route as StudentPortalRouteImport } from './routes/student-portal'
 import { Route as StudentLifeRouteImport } from './routes/student-life'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SetPasswordRouteImport } from './routes/set-password'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ParentPortalRouteImport } from './routes/parent-portal'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -59,6 +60,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SetPasswordRoute = SetPasswordRouteImport.update({
   id: '/set-password',
   path: '/set-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentPortalRoute = ParentPortalRouteImport.update({
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -284,6 +292,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/news': typeof NewsRoute
   '/parent-portal': typeof ParentPortalRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/set-password': typeof SetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/student-life': typeof StudentLifeRoute
@@ -318,6 +327,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -350,6 +360,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/news'
     | '/parent-portal'
+    | '/reset-password'
     | '/set-password'
     | '/sitemap.xml'
     | '/student-life'
@@ -417,6 +429,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   NewsRoute: typeof NewsRoute
   ParentPortalRoute: typeof ParentPortalRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SetPasswordRoute: typeof SetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudentLifeRoute: typeof StudentLifeRoute
@@ -457,6 +470,13 @@ declare module '@tanstack/react-router' {
       path: '/set-password'
       fullPath: '/set-password'
       preLoaderRoute: typeof SetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parent-portal': {
@@ -693,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   NewsRoute: NewsRoute,
   ParentPortalRoute: ParentPortalRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SetPasswordRoute: SetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudentLifeRoute: StudentLifeRoute,

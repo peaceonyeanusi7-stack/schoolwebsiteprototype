@@ -168,7 +168,7 @@ export const startApplicationFeePayment = createServerFn({ method: "POST" })
     if (app.status !== "submitted") throw new Error("This application fee has already been paid.");
 
     const reference = generatePaystackReference("ADM");
-    const callbackUrl = `${data.callbackOrigin}/admissions/payment/callback`;
+    const callbackUrl = `${data.callbackOrigin}/payment/callback`;
 
     const { error: insertErr } = await supabaseAdmin.from("payments").insert({
       school_id: app.school_id,
@@ -309,7 +309,7 @@ export const startSchoolSubscription = createServerFn({ method: "POST" })
       email: data.adminEmail,
       amount: plan.amount_kobo,
       reference,
-      callback_url: `${data.callbackOrigin}/admissions/payment/callback`,
+      callback_url: `${data.callbackOrigin}/payment/callback`,
       metadata: { plan_name: plan.name, school_name: data.schoolName },
     });
     if (psErr || !ps) {
