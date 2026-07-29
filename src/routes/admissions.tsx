@@ -96,32 +96,7 @@ function Admissions() {
         </div>
       </section>
 
-      <section id="apply" className="py-24">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="rounded-3xl bg-card border border-border p-8 md:p-12 shadow-sm">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-gold mb-3">Start Application</p>
-            <h2 className="font-display text-3xl text-royal mb-8">Admissions enquiry form</h2>
-            <form className="grid gap-5" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid md:grid-cols-2 gap-5">
-                <Field label="Parent Full Name" />
-                <Field label="Phone Number" type="tel" />
-              </div>
-              <Field label="Email Address" type="email" />
-              <div className="grid md:grid-cols-2 gap-5">
-                <Field label="Child's Full Name" />
-                <SelectField label="Applying To" options={["Nursery", "Primary", "Secondary", "Boarding"]} />
-              </div>
-              <label className="grid gap-2">
-                <span className="text-sm font-semibold">Message</span>
-                <textarea rows={4} className="rounded-xl border border-border px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-royal/30" />
-              </label>
-              <button className="bg-royal text-white rounded-full py-4 font-semibold hover:brightness-110 transition">
-                Submit Enquiry
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+      <EnquirySection />
     </>
   );
 }
