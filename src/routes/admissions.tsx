@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
-import { FileText, ClipboardCheck, MessagesSquare, GraduationCap, Sparkles, CalendarDays, ArrowRight } from "lucide-react";
+import { submitEnquiry } from "@/lib/admissions.functions";
+import { FileText, ClipboardCheck, MessagesSquare, GraduationCap, Sparkles, CalendarDays, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/admissions")({
   head: () => ({
