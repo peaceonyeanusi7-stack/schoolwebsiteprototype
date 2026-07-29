@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AdmissionsRouteImport } from './routes/admissions'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -92,6 +93,11 @@ const CareersRoute = CareersRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdmissionsRoute = AdmissionsRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/admissions': typeof AdmissionsRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
@@ -292,6 +301,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -322,6 +332,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -353,6 +364,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/admissions'
+    | '/apply'
     | '/auth'
     | '/careers'
     | '/contact'
@@ -385,6 +397,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdmissionsRoute: typeof AdmissionsRoute
+  ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
@@ -480,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admissions': {
@@ -645,6 +665,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AdmissionsRoute: AdmissionsRoute,
+  ApplyRoute: ApplyRoute,
   AuthRoute: AuthRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,

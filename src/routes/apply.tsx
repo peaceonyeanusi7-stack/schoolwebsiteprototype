@@ -188,8 +188,9 @@ function ApplyPage() {
       </section>
     </>
   );
+}
 
-  function Text({ label, type = "text", value, onChange }: { label: string; type?: string; value: string; onChange: (v: string) => void }) {
+function Text({ label, type = "text", value, onChange }: { label: string; type?: string; value: string; onChange: (v: string) => void }) {
     return (
       <label className="grid gap-2">
         <span className="text-sm font-semibold">{label}</span>
@@ -203,7 +204,7 @@ function ApplyPage() {
     );
   }
 
-  function Select({ label, options, value, onChange }: { label: string; options: string[]; value: string; onChange: (v: string) => void }) {
+function Select({ label, options, value, onChange }: { label: string; options: string[]; value: string; onChange: (v: string) => void }) {
     return (
       <label className="grid gap-2">
         <span className="text-sm font-semibold">{label}</span>
@@ -219,4 +220,3 @@ function ApplyPage() {
       </label>
     );
   }
-}
