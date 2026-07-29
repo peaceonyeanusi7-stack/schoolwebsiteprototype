@@ -14,6 +14,137 @@ export type Database = {
   }
   public: {
     Tables: {
+      admission_applications: {
+        Row: {
+          address: string | null
+          application_fee_kobo: number
+          child_dob: string | null
+          child_gender: string | null
+          child_name: string
+          created_at: string
+          enquiry_id: string | null
+          id: string
+          level: string
+          notes: string | null
+          paid_at: string | null
+          parent_email: string
+          parent_name: string
+          parent_phone: string
+          previous_school: string | null
+          receipt_number: string | null
+          school_id: string | null
+          status: Database["public"]["Enums"]["admission_status"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          application_fee_kobo?: number
+          child_dob?: string | null
+          child_gender?: string | null
+          child_name: string
+          created_at?: string
+          enquiry_id?: string | null
+          id?: string
+          level: string
+          notes?: string | null
+          paid_at?: string | null
+          parent_email: string
+          parent_name: string
+          parent_phone: string
+          previous_school?: string | null
+          receipt_number?: string | null
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["admission_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          application_fee_kobo?: number
+          child_dob?: string | null
+          child_gender?: string | null
+          child_name?: string
+          created_at?: string
+          enquiry_id?: string | null
+          id?: string
+          level?: string
+          notes?: string | null
+          paid_at?: string | null
+          parent_email?: string
+          parent_name?: string
+          parent_phone?: string
+          previous_school?: string | null
+          receipt_number?: string | null
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["admission_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admission_applications_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "admission_enquiries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "admission_applications_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      admission_enquiries: {
+        Row: {
+          child_name: string
+          created_at: string
+          id: string
+          level: string
+          message: string | null
+          parent_email: string
+          parent_name: string
+          parent_phone: string
+          school_id: string | null
+          status: Database["public"]["Enums"]["enquiry_status"]
+          updated_at: string
+        }
+        Insert: {
+          child_name: string
+          created_at?: string
+          id?: string
+          level: string
+          message?: string | null
+          parent_email: string
+          parent_name: string
+          parent_phone: string
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          updated_at?: string
+        }
+        Update: {
+          child_name?: string
+          created_at?: string
+          id?: string
+          level?: string
+          message?: string | null
+          parent_email?: string
+          parent_name?: string
+          parent_phone?: string
+          school_id?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admission_enquiries_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fee_items: {
         Row: {
           amount_kobo: number
@@ -61,8 +192,50 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string | null
+          category: string
+          created_at: string
+          id: string
+          is_read: boolean
+          school_id: string | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          body?: string | null
+          category?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          school_id?: string | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          body?: string | null
+          category?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          school_id?: string | null
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
+          admission_application_id: string | null
           amount_kobo: number
           created_at: string
           currency: string
@@ -82,6 +255,7 @@ export type Database = {
           verified_at: string | null
         }
         Insert: {
+          admission_application_id?: string | null
           amount_kobo: number
           created_at?: string
           currency?: string
@@ -101,6 +275,7 @@ export type Database = {
           verified_at?: string | null
         }
         Update: {
+          admission_application_id?: string | null
           amount_kobo?: number
           created_at?: string
           currency?: string
@@ -120,6 +295,13 @@ export type Database = {
           verified_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "payments_admission_application_id_fkey"
+            columns: ["admission_application_id"]
+            isOneToOne: false
+            referencedRelation: "admission_applications"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "payments_fee_item_id_fkey"
             columns: ["fee_item_id"]
@@ -287,6 +469,12 @@ export type Database = {
       }
     }
     Enums: {
+      admission_status:
+        | "submitted"
+        | "fee_paid"
+        | "under_review"
+        | "accepted"
+        | "rejected"
       app_role:
         | "super_admin"
         | "school_admin"
@@ -295,6 +483,7 @@ export type Database = {
         | "student"
         | "accountant"
         | "librarian"
+      enquiry_status: "new" | "contacted" | "converted" | "closed"
       fee_category: "admission" | "school_fee"
       payment_status: "pending" | "success" | "failed" | "abandoned"
       payment_type: "admission" | "school_fee" | "subscription"
@@ -425,6 +614,13 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      admission_status: [
+        "submitted",
+        "fee_paid",
+        "under_review",
+        "accepted",
+        "rejected",
+      ],
       app_role: [
         "super_admin",
         "school_admin",
@@ -434,6 +630,7 @@ export const Constants = {
         "accountant",
         "librarian",
       ],
+      enquiry_status: ["new", "contacted", "converted", "closed"],
       fee_category: ["admission", "school_fee"],
       payment_status: ["pending", "success", "failed", "abandoned"],
       payment_type: ["admission", "school_fee", "subscription"],
