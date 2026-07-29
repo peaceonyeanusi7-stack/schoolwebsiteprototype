@@ -26,6 +26,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
+import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as AcademicsSecondaryRouteImport } from './routes/academics.secondary'
 import { Route as AcademicsPrimaryRouteImport } from './routes/academics.primary'
 import { Route as AcademicsNurseryRouteImport } from './routes/academics.nursery'
@@ -124,6 +125,11 @@ const AcademicsIndexRoute = AcademicsIndexRouteImport.update({
   path: '/academics/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentCallbackRoute = PaymentCallbackRouteImport.update({
+  id: '/payment/callback',
+  path: '/payment/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AcademicsSecondaryRoute = AcademicsSecondaryRouteImport.update({
   id: '/academics/secondary',
   path: '/academics/secondary',
@@ -219,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics/': typeof AcademicsIndexRoute
   '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics': typeof AcademicsIndexRoute
   '/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -283,6 +291,7 @@ export interface FileRoutesById {
   '/academics/nursery': typeof AcademicsNurseryRoute
   '/academics/primary': typeof AcademicsPrimaryRoute
   '/academics/secondary': typeof AcademicsSecondaryRoute
+  '/payment/callback': typeof PaymentCallbackRoute
   '/academics/': typeof AcademicsIndexRoute
   '/_authenticated/dashboard/accountant': typeof AuthenticatedDashboardAccountantRoute
   '/_authenticated/dashboard/librarian': typeof AuthenticatedDashboardLibrarianRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics/'
     | '/dashboard/accountant'
     | '/dashboard/librarian'
@@ -347,6 +357,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics'
     | '/dashboard/accountant'
     | '/dashboard/librarian'
@@ -379,6 +390,7 @@ export interface FileRouteTypes {
     | '/academics/nursery'
     | '/academics/primary'
     | '/academics/secondary'
+    | '/payment/callback'
     | '/academics/'
     | '/_authenticated/dashboard/accountant'
     | '/_authenticated/dashboard/librarian'
@@ -412,6 +424,7 @@ export interface RootRouteChildren {
   AcademicsNurseryRoute: typeof AcademicsNurseryRoute
   AcademicsPrimaryRoute: typeof AcademicsPrimaryRoute
   AcademicsSecondaryRoute: typeof AcademicsSecondaryRoute
+  PaymentCallbackRoute: typeof PaymentCallbackRoute
   AcademicsIndexRoute: typeof AcademicsIndexRoute
   ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
 }
@@ -535,6 +548,13 @@ declare module '@tanstack/react-router' {
       path: '/academics'
       fullPath: '/academics/'
       preLoaderRoute: typeof AcademicsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment/callback': {
+      id: '/payment/callback'
+      path: '/payment/callback'
+      fullPath: '/payment/callback'
+      preLoaderRoute: typeof PaymentCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academics/secondary': {
@@ -680,6 +700,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcademicsNurseryRoute: AcademicsNurseryRoute,
   AcademicsPrimaryRoute: AcademicsPrimaryRoute,
   AcademicsSecondaryRoute: AcademicsSecondaryRoute,
+  PaymentCallbackRoute: PaymentCallbackRoute,
   AcademicsIndexRoute: AcademicsIndexRoute,
   ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,
 }
